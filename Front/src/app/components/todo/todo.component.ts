@@ -1,14 +1,14 @@
+import { MatIconModule } from '@angular/material/icon';
 import { Component, input, output } from '@angular/core';
 import { Todo } from '../../shared/interfaces';
 import { NgIf } from '@angular/common';
 @Component({
     selector: 'app-todo',
-    imports: [NgIf],
+    imports: [NgIf, MatIconModule],
     template: `
-     <li class="todo-items" *ngIf="todo() as t"
-     >
+     <li class="todo-items" *ngIf="todo() as t">
      <!-- *ngIf - S'assurer que si c'est undefined on affiche rien de cette todo -->
-        <span (click)="selectTodo.emit(t.id)">{{todo()?.title}}</span>
+              <span> {{todo()?.title}} </span>
         <input (click)="toggleTodo()" type="checkbox" [checked]='todo()?.done'/>
         <button (click)="deleteTodo.emit(t.id)" class="  btn btn-danger ">X</button>
       </li>
@@ -18,13 +18,13 @@ import { NgIf } from '@angular/common';
   .todo-items{
     display: flex;
       align-items: center;
-      gap: 12px; /* Espace entre les éléments */
+      gap: 12px;
       padding: 8px 0;
     }
 
     .todo-item span {
       text-decoration: line-through;
-      flex: 1; /* Pour pousser le bouton à droite si besoin */
+      flex: 1;
     }
 
     .todo-item mat-icon {
@@ -40,6 +40,7 @@ import { NgIf } from '@angular/common';
 export class TodoComponent {
   todo = input<Todo>();
   selectTodo = output<string>();
+  editTodo = output<string>();
   updateTodo = output<Todo>();
   deleteTodo = output<string>();
   toggleTodo(){

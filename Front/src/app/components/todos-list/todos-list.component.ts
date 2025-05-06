@@ -8,7 +8,7 @@ import { Todo } from '../../shared/interfaces';
     template: `
     <ul class="flex flex-col gap-12">
     @for(todo  of todosList(); track todo.id){
-      <app-todo  (selectTodo)="selectTodo.emit($event)" (deleteTodo)="deleteTodo.emit($event)" (updateTodo)="updateTodo.emit($event)" [todo]="todo"/>
+      <app-todo (selectTodo)="selectTodo.emit($event)" (deleteTodo)="deleteTodo.emit($event)" (updateTodo)="updateTodo.emit($event)" [todo]="todo"/>
     }@empty {
       <li> Il n'y a pas de todos</li>
     }

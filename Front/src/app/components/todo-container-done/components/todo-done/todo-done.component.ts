@@ -19,13 +19,13 @@ import { NgIf } from '@angular/common';
     .todo-item {
       display: flex;
       align-items: center;
-      gap: 12px; /* Espace entre les éléments */
+      gap: 12px;
       padding: 8px 0;
     }
 
     .todo-item span {
       text-decoration: line-through;
-      flex: 1; /* Pour pousser le bouton à droite si besoin */
+      flex: 1;
     }
 
     .todo-item mat-icon {

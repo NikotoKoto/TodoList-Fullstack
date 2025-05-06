@@ -7,7 +7,7 @@ import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-todo-container',
-  imports: [TodoFormComponent, TodosListComponent, JsonPipe],
+  imports: [TodoFormComponent, TodosListComponent],
   template: `
     <h1>Que dois je faire ?</h1>
     <app-todo-form (addTodo)="addTodo($event)" class="mt-20" />
@@ -18,9 +18,10 @@ import { JsonPipe } from '@angular/common';
       (updateTodo)="updateTodo($event)"
       (selectTodo)="selectTodo($event)"
       (deleteTodo)="deleteTodo($event)"
+  
       [todosList]="todoList()"
     />
-    <pre> {{ selectedTodo() | json }}</pre>
+  
 
     }
   `,
@@ -33,7 +34,7 @@ import { JsonPipe } from '@angular/common';
 })
 export class TodoContainerComponent {
   TodosService = inject(TodosService);
-  selectedTodo = this.TodosService.selectedTodoResource.value;
+  selectedTodo = this.TodosService.selectedTodoResource.value();
   todoIsLoading = this.TodosService.todoResource.isLoading;
   todoList = computed(() => (this.TodosService.todoResource.value() || []).filter(todo => !todo.done));
   addTodo(todo: TodoForm) {
@@ -49,4 +50,6 @@ export class TodoContainerComponent {
   deleteTodo(todoId: string) {
     this.TodosService.deleteTodo(todoId);
   }
+
+ 
 }
