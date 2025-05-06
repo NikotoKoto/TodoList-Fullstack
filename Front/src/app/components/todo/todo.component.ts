@@ -5,18 +5,36 @@ import { NgIf } from '@angular/common';
     selector: 'app-todo',
     imports: [NgIf],
     template: `
-     <li class="flex border" *ngIf="todo() as t"
+     <li class="todo-items" *ngIf="todo() as t"
      >
      <!-- *ngIf - S'assurer que si c'est undefined on affiche rien de cette todo -->
-        <p (click)="selectTodo.emit(t.id)" class="flex-auto gap-12 px-12">{{todo()?.title}}</p>
-        <input (click)="toggleTodo()" type="checkbox" class="border mx-10" [checked]='todo()?.done'/>
-        <button (click)="deleteTodo.emit(t.id)" class=" flex justify-content-center align-items-center btn btn-danger ">X</button>
+        <span (click)="selectTodo.emit(t.id)">{{todo()?.title}}</span>
+        <input (click)="toggleTodo()" type="checkbox" [checked]='todo()?.done'/>
+        <button (click)="deleteTodo.emit(t.id)" class="  btn btn-danger ">X</button>
       </li>
   `,
     host: {},
     styles: `
-  :host{
-    padding: 0 16px 0 16px;
+  .todo-items{
+    display: flex;
+      align-items: center;
+      gap: 12px; /* Espace entre les éléments */
+      padding: 8px 0;
+    }
+
+    .todo-item span {
+      text-decoration: line-through;
+      flex: 1; /* Pour pousser le bouton à droite si besoin */
+    }
+
+    .todo-item mat-icon {
+      cursor: pointer;
+    }
+
+    .todo-item button {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
   }`
 })
 export class TodoComponent {

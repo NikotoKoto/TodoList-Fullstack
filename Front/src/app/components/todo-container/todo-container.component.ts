@@ -9,6 +9,7 @@ import { JsonPipe } from '@angular/common';
   selector: 'app-todo-container',
   imports: [TodoFormComponent, TodosListComponent, JsonPipe],
   template: `
+    <h1>Que dois je faire ?</h1>
     <app-todo-form (addTodo)="addTodo($event)" class="mt-20" />
     @if (todoIsLoading()) {
     <h2>En cours de chargement</h2>
@@ -23,13 +24,18 @@ import { JsonPipe } from '@angular/common';
 
     }
   `,
-  styles: ``,
+  styles: `
+  :host{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+  }`,
 })
 export class TodoContainerComponent {
   TodosService = inject(TodosService);
   selectedTodo = this.TodosService.selectedTodoResource.value;
   todoIsLoading = this.TodosService.todoResource.isLoading;
-  todoList = computed(() => this.TodosService.todoResource.value() || []);
+  todoList = computed(() => (this.TodosService.todoResource.value() || []).filter(todo => !todo.done));
   addTodo(todo: TodoForm) {
     this.TodosService.addTodo(todo);
   }

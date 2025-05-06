@@ -12,6 +12,7 @@ import { Todo, TodoForm } from '../../shared/interfaces';
     styles: `
   :host{
       display: flex;
+      width: 50%;
     gap: 20px;
     padding: 16px
   }
