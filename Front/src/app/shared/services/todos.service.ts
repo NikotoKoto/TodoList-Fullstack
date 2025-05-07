@@ -1,5 +1,6 @@
+
 import { Injectable, signal, resource, computed } from '@angular/core';
-import { Todo, TodoForm } from '../interfaces';
+import { Todo, TodoForm} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -100,8 +101,29 @@ selectTodoId(todoId : string){
     }catch{
 
     }
+    
   }
 
+  async editTodo(editTodo : Todo){
+      try{
+        const {id, ...restEditTodo} = editTodo;
+        const response = await fetch(`${this.BASE_URL}/${id}`,{
+          method : 'PATCH',
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify(restEditTodo)
+        })
+        if(response.ok){
+          const data = await response.json();
+          this.todoResource.update((todos) => todos?.map(t => t.id === (data as Todo).id ? data : t ))
+        }else {
+          throw new Error('oops');
+        }
+      }catch(e){
+        throw new Error('oops');
+      }
+  }
   
 
   constructor() {

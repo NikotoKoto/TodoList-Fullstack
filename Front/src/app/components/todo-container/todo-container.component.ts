@@ -1,9 +1,10 @@
 import { TodosService } from './../../shared/services/todos.service';
 import { Component, computed, inject, signal } from '@angular/core';
-import { TodoFormComponent } from '../todo-form/todo-form.component';
-import { TodosListComponent } from '../todos-list/todos-list.component';
+import { TodoFormComponent } from './todo-form/todo-form.component';
+
 import { Todo, TodoForm } from '../../shared/interfaces';
 import { JsonPipe } from '@angular/common';
+import { TodosListComponent } from './todos-list/todos-list.component';
 
 @Component({
   selector: 'app-todo-container',
@@ -18,10 +19,9 @@ import { JsonPipe } from '@angular/common';
       (updateTodo)="updateTodo($event)"
       (selectTodo)="selectTodo($event)"
       (deleteTodo)="deleteTodo($event)"
-  
+      (editedTodo)="editedTodo($event)"
       [todosList]="todoList()"
     />
-  
 
     }
   `,
@@ -36,7 +36,9 @@ export class TodoContainerComponent {
   TodosService = inject(TodosService);
   selectedTodo = this.TodosService.selectedTodoResource.value();
   todoIsLoading = this.TodosService.todoResource.isLoading;
-  todoList = computed(() => (this.TodosService.todoResource.value() || []).filter(todo => !todo.done));
+  todoList = computed(() =>
+    (this.TodosService.todoResource.value() || []).filter((todo) => !todo.done)
+  );
   addTodo(todo: TodoForm) {
     this.TodosService.addTodo(todo);
   }
@@ -51,5 +53,7 @@ export class TodoContainerComponent {
     this.TodosService.deleteTodo(todoId);
   }
 
- 
+  editedTodo(editTodo: Todo) {
+    this.TodosService.editTodo(editTodo);
+  }
 }
